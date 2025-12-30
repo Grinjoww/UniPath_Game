@@ -2,20 +2,19 @@
 
 public class Meta : MonoBehaviour
 {
-    // 1. Creamos un hueco para arrastrar el panel del minijuego
-    public GameObject pantallaMinijuego;
+    public DialogoEnfermera scriptCharla; // Conexión con el Manager
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("🏥 ¡LLEGASTE! Activando examen...");
+            Debug.Log("🏥 Llegaste al dispensario.");
 
-            // 2. Encendemos el minijuego
-            pantallaMinijuego.SetActive(true);
+            // Llamamos a la función del otro script
+            scriptCharla.IniciarCharla();
 
-            // Opcional: Pausar el juego de fondo (para que no te muevas mientras juegas)
-            // Time.timeScale = 0; 
+            // Desactivamos este trigger para que no se repita
+            GetComponent<BoxCollider>().enabled = false;
         }
     }
 }
