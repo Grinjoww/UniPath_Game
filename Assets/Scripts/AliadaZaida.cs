@@ -2,22 +2,20 @@
 
 public class AliadaZaida : MonoBehaviour
 {
-    public SistemaVerguenza managerVerguenza; // Conexión con la barra morada
-
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        // 1. Verificamos si lo que entró es el Jugador (o parte de él)
+        // Usamos GetComponentInParent por si chocas con el brazo o el pie
+        MovimientoJugador jaime = other.GetComponentInParent<MovimientoJugador>();
+
+        if (jaime != null)
         {
-            Debug.Log("💙 ¡Encontraste a Zaida! (Inmunidad Activada)");
+            // 2. Le decimos a Jaime que se calme
+            jaime.Calmarse();
 
-            // Activamos el truco en el otro script
-            managerVerguenza.ActivarModoZaida();
 
-            // Opcional: Aquí podrías poner un diálogo flotante luego
-
-            // Destruimos este script/objeto o lo apagamos para que no se repita
-            // gameObject.SetActive(false); // Si quieres que desaparezca visualmente
-            Destroy(this); // Solo borramos el script, el cilindro se queda
+            // 3. (Opcional) Desaparecemos a Zaida para que sea un ítem de un solo uso
+            // Destroy(gameObject); 
         }
     }
 }
